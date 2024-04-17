@@ -5,12 +5,14 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
+ *
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D;
 
+use ArrayIterator;
+use JsonSerializable;
 use Latuconsinafr\BinPackager\BinPackager3D\Handlers\IntersectionHandler;
 use Latuconsinafr\BinPackager\BinPackager3D\Types\AxisType;
 use Latuconsinafr\BinPackager\BinPackager3D\Types\RotationCombinationType;
@@ -18,7 +20,7 @@ use Latuconsinafr\BinPackager\BinPackager3D\Types\RotationCombinationType;
 /**
  * A class representative of a single bin to put @see Item into.
  */
-final class Bin implements \JsonSerializable
+final class Bin implements JsonSerializable
 {
     /**
      * @var mixed The bin's id.
@@ -28,57 +30,57 @@ final class Bin implements \JsonSerializable
     /**
      * @var float The bin's length.
      */
-    private float $length;
+    private $length;
 
     /**
      * @var float The bin's breadth.
      */
-    private float $breadth;
+    private $breadth;
 
     /**
      * @var float The bin's height.
      */
-    private float $height;
+    private $height;
 
     /**
      * @var float The bin's volume.
      */
-    private float $volume;
+    private $volume;
 
     /**
      * @var float The bin's weight.
      */
-    private float $weight;
+    private $weight;
 
     /**
      * @var iterable The fitted item(s) inside the bin.
      */
-    private iterable $fittedItems;
+    private $fittedItems;
 
     /**
      * @var float The total fitted bin's volume.
      */
-    private float $totalFittedVolume;
+    private $totalFittedVolume;
 
     /**
      * @var float The total fitted bin's weight.
      */
-    private float $totalFittedWeight;
+    private $totalFittedWeight;
 
     /**
      * @var iterable The unfitted item(s).
      */
-    private iterable $unfittedItems;
+    private $unfittedItems;
 
     /**
      * @var float The total unfitted bin's volume.
      */
-    private float $totalUnfittedVolume;
+    private $totalUnfittedVolume;
 
     /**
      * @var float The total unfitted bin's weight.
      */
-    private float $totalUnfittedWeight;
+    private $totalUnfittedWeight;
 
     /**
      * @param mixed $id The identifier of the bin.
@@ -87,28 +89,28 @@ final class Bin implements \JsonSerializable
      * @param float $breadth The breadth of the bin.
      * @param float $weight The weight of the bin.
      */
-    public function __construct($id, float $length, float $height, float $breadth, float $weight)
+    public function __construct($id, $length, $height, $breadth, $weight)
     {
         $this->id = $id;
 
-        $this->length = $length;
-        $this->height = $height;
+        $this->length  = $length;
+        $this->height  = $height;
         $this->breadth = $breadth;
-        $this->volume = (float) $this->length * $this->height * $this->breadth;
-        $this->weight = $weight;
+        $this->volume  = (float)$this->length * $this->height * $this->breadth;
+        $this->weight  = $weight;
 
-        $this->fittedItems = [];
+        $this->fittedItems       = [];
         $this->totalFittedVolume = 0;
         $this->totalFittedWeight = 0;
 
-        $this->unfittedItems = [];
+        $this->unfittedItems       = [];
         $this->totalUnfittedVolume = 0;
         $this->totalUnfittedWeight = 0;
     }
 
     /**
      * The bin's id getter.
-     * 
+     *
      * @return mixed The bin's id.
      */
     public function getId()
@@ -118,200 +120,188 @@ final class Bin implements \JsonSerializable
 
     /**
      * The bin's length getter.
-     * 
+     *
      * @return float The bin's length.
      */
-    public function getLength(): float
+    public function getLength()
     {
         return $this->length;
     }
 
     /**
      * The bin's height getter.
-     * 
+     *
      * @return float The bin's height.
      */
-    public function getHeight(): float
+    public function getHeight()
     {
         return $this->height;
     }
 
     /**
      * The bin's breadth getter.
-     * 
+     *
      * @return float The bin's breadth.
      */
-    public function getBreadth(): float
+    public function getBreadth()
     {
         return $this->breadth;
     }
 
     /**
      * Get the bin's volume.
-     * 
+     *
      * @return float The bin's volume.
      */
-    public function getVolume(): float
+    public function getVolume()
     {
         return $this->volume;
     }
 
     /**
      * The bin's weight getter.
-     * 
+     *
      * @return float The bin's weight.
      */
-    public function getWeight(): float
+    public function getWeight()
     {
         return $this->weight;
     }
 
     /**
-     * The bin's fitted items getter.
-     * 
+     * The bin's fitted items' getter.
+     *
      * @return iterable The bin's fitted items.
      */
-    public function getFittedItems(): iterable
+    public function getFittedItems()
     {
         return $this->fittedItems;
     }
 
     /**
-     * The bin's iterable fitted items getter.
-     * 
+     * The bin's iterable fitted items' getter.
+     *
      * @return ArrayIterator The bin's iterable fitted items.
      */
-    public function getIterableFittedItems(): \ArrayIterator
+    public function getIterableFittedItems()
     {
-        return new \ArrayIterator($this->fittedItems);
+        return new ArrayIterator($this->fittedItems);
     }
 
     /**
      * The bin's unfitted items getter.
-     * 
+     *
      * @return iterable The bin's unfitted items.
      */
-    public function getUnfittedItems(): iterable
+    public function getUnfittedItems()
     {
         return $this->unfittedItems;
     }
 
     /**
-     * The bin's iterable unfitted items getter.
-     * 
+     * The bin's iterable unfitted items' getter.
+     *
      * @return ArrayIterator The bin's iterable unfitted items.
      */
-    public function getIterableUnfittedItems(): \ArrayIterator
+    public function getIterableUnfittedItems()
     {
-        return new \ArrayIterator($this->unfittedItems);
+        return new ArrayIterator($this->unfittedItems);
     }
 
     /**
      * Get the bin's total fitted volume.
-     * 
+     *
      * @return float The fitted bin's volume.
      */
-    public function getTotalFittedVolume(): float
+    public function getTotalFittedVolume()
     {
         return $this->totalFittedVolume;
     }
 
     /**
      * Get the bin's total fitted weight.
-     * 
+     *
      * @return float The fitted bin's weight.
      */
-    public function getTotalFittedWeight(): float
+    public function getTotalFittedWeight()
     {
         return $this->totalFittedWeight;
     }
 
     /**
      * Get the bin's total unfitted volume.
-     * 
+     *
      * @return float The unfitted bin's volume.
      */
-    public function getTotalUnfittedVolume(): float
+    public function getTotalUnfittedVolume()
     {
         return $this->totalUnfittedVolume;
     }
 
     /**
      * Get the bin's total unfitted weight.
-     * 
+     *
      * @return float The unfitted bin's weight.
      */
-    public function getTotalUnfittedWeight(): float
+    public function getTotalUnfittedWeight()
     {
         return $this->totalUnfittedWeight;
     }
 
     /**
      * Set the number of digits after the decimal point of bin's values.
-     * 
+     *
      * @param mixed $precision The number of digits after the decimal point.
-     * 
+     *
      * @return void
      */
-    public function setPrecision($precision): void
+    public function setPrecision($precision)
     {
-        $this->length = round($this->length, $precision);
-        $this->height = round($this->height, $precision);
+        $this->length  = round($this->length, $precision);
+        $this->height  = round($this->height, $precision);
         $this->breadth = round($this->breadth, $precision);
-        $this->volume = round($this->volume, $precision);
-        $this->weight = round($this->weight, $precision);
+        $this->volume  = round($this->volume, $precision);
+        $this->weight  = round($this->weight, $precision);
     }
 
     /**
-     * The bin's fitted items setter.
+     * The bin's fitted items' setter.
      * The parameter value should be an instance of Item class.
-     * 
-     * @param array $position The item to put into.
-     * 
+     *
      * @return void
      */
-    public function setFittedItems(Item $item): void
+    public function setFittedItems(Item $item)
     {
-        if (!$item instanceof Item) {
-            throw new \UnexpectedValueException("Item should be an instance of Item class.");
-        }
-
-        $this->fittedItems[] = $item;
+        $this->fittedItems[]     = $item;
         $this->totalFittedVolume += $item->getVolume();
         $this->totalFittedWeight += $item->getWeight();
     }
 
     /**
-     * The bin's unfitted items setter.
+     * The bin's unfitted items' setter.
      * The parameter value should be an instance of Item class.
-     * 
-     * @param array $position The items that cannot be fitted into.
-     * 
+     *
      * @return void
      */
-    public function setUnfittedItems(Item $item): void
+    public function setUnfittedItems(Item $item)
     {
-        if (!$item instanceof Item) {
-            throw new \UnexpectedValueException("Item should be an instance of Item class.");
-        }
-
-        $this->unfittedItems[] = $item;
+        $this->unfittedItems[]     = $item;
         $this->totalUnfittedVolume += $item->getVolume();
         $this->totalUnfittedWeight += $item->getWeight();
     }
 
     /**
      * The put item into the bin method.
-     * 
+     *
      * @param Item $item The item to put into.
      * @param array $position The starting position.
-     * 
-     * @return bool The flag indicates whether the item can fit into the bin or not, 
+     *
+     * @return bool The flag indicates whether the item can fit into the bin or not,
      * return true if the item can fit into the bin, otherwise false.
      */
-    public function putItem(Item $item, array $position): bool
+    public function putItem(Item $item, array $position)
     {
-        $fit = false;
+        $fit               = false;
         $validItemPosition = $item->getPosition();
         $item->setPosition($position);
 
@@ -361,10 +351,10 @@ final class Bin implements \JsonSerializable
 
     /**
      * The json serialize method.
-     * 
+     *
      * @return array The resulted object.
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize()
     {
         $vars = get_object_vars($this);
 

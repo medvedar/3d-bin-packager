@@ -5,9 +5,9 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
+ *
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D;
 
@@ -23,48 +23,48 @@ final class Packager implements \JsonSerializable
     /**
      * @var iterable The bins.
      */
-    private iterable $bins;
+    private $bins;
 
     /**
      * @var iterable The items to put into the bins.
      */
-    private iterable $items;
+    private $items;
 
     /**
      * @var float The total bins volume inside the packager.
      */
-    private float $totalBinsVolume;
+    private $totalBinsVolume;
 
     /**
      * @var float The total bins weight inside the packager.
      */
-    private float $totalBinsWeight;
+    private $totalBinsWeight;
 
     /**
      * @var float The total items volume inside the packager.
      */
-    private float $totalItemsVolume;
+    private $totalItemsVolume;
 
     /**
      * @var float The total items weight inside the packager.
      */
-    private float $totalItemsWeight;
+    private $totalItemsWeight;
 
     /**
      * @var int The number of digits after the decimal point.
      */
-    private int $precision;
+    private $precision;
 
     /**
      * @var int The sort method to apply (1 for ascending and -1 for descending).
      */
-    private int $sortMethod;
+    private $sortMethod;
 
     /**
      * @param int $precision The number of digits after the decimal point.
      * @param int $sortMethod The sort method to apply (1 for ascending and -1 for descending).
      */
-    public function __construct(int $precision = 0, int $sortMethod = SortType::DESCENDING)
+    public function __construct( $precision = 0, $sortMethod = SortType::DESCENDING)
     {
         if ($precision < 0) {
             throw new \UnexpectedValueException("The number of digits should be more than or equals to zero.");
@@ -88,7 +88,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return iterable The packager's bins.
      */
-    public function getBins(): iterable
+    public function getBins()
     {
         return $this->bins;
     }
@@ -96,9 +96,9 @@ final class Packager implements \JsonSerializable
     /**
      * The packager's iterable bins getter.
      * 
-     * @return ArrayIterator The packager's iterable bins.
+     * @return \ArrayIterator The packager's iterable bins.
      */
-    public function getIterableBins(): \ArrayIterator
+    public function getIterableBins()
     {
         return new \ArrayIterator($this->bins);
     }
@@ -108,17 +108,17 @@ final class Packager implements \JsonSerializable
      * 
      * @return iterable The packager's items.
      */
-    public function getItems(): iterable
+    public function getItems()
     {
         return $this->items;
     }
 
     /**
-     * The packager's iterable items getter.
+     * The packager's iterable items' getter.
      * 
-     * @return ArrayIterator The packager's iterable items.
+     * @return \ArrayIterator The packager's iterable items.
      */
-    public function getIterableItems(): \ArrayIterator
+    public function getIterableItems()
     {
         return new \ArrayIterator($this->items);
     }
@@ -128,7 +128,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return float The total bin(s) volume.
      */
-    public function getTotalBinsVolume(): float
+    public function getTotalBinsVolume()
     {
         return $this->totalBinsVolume;
     }
@@ -138,7 +138,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return float The total bin(s) weight.
      */
-    public function getTotalBinsWeight(): float
+    public function getTotalBinsWeight()
     {
         return $this->totalBinsWeight;
     }
@@ -148,7 +148,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return float The total item(s) volume.
      */
-    public function getTotalItemsVolume(): float
+    public function getTotalItemsVolume()
     {
         return $this->totalItemsVolume;
     }
@@ -158,7 +158,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return float The total item(s) weight.
      */
-    public function getTotalItemsWeight(): float
+    public function getTotalItemsWeight()
     {
         return $this->totalItemsWeight;
     }
@@ -170,7 +170,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return int The lower bounds.
      */
-    public function getLowerBounds(): int
+    public function getLowerBounds()
     {
         // To prevent the division by zero error
         if ($this->totalItemsVolume == 0) {
@@ -188,7 +188,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return void
      */
-    public function addBin(Bin $bin): void
+    public function addBin(Bin $bin)
     {
         foreach ($this->bins as $existingBin) {
             if ($existingBin->getId() === $bin->getId()) {
@@ -211,7 +211,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return void
      */
-    public function addBins(iterable $bins): void
+    public function addBins( $bins)
     {
         foreach ($bins as $bin) {
             if (!$bin instanceof Bin) {
@@ -230,7 +230,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return void
      */
-    public function addItem(Item $item): void
+    public function addItem(Item $item)
     {
         foreach ($this->items as $existingItem) {
             if ($existingItem->getId() === $item->getId()) {
@@ -253,7 +253,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return void
      */
-    public function addItems(iterable $items): void
+    public function addItems( $items)
     {
         foreach ($items as $item) {
             if (!$item instanceof Item) {
@@ -274,16 +274,9 @@ final class Packager implements \JsonSerializable
      * 
      * @return void
      */
-    public function packItemToBin(Bin $bin, Item $item): void
+    public function packItemToBin(Bin $bin, Item $item)
     {
         $fitted = false;
-
-        if (!$bin instanceof Bin) {
-            throw new \UnexpectedValueException("Bin should be an instance of Bin class.");
-        }
-        if (!$item instanceof Item) {
-            throw new \UnexpectedValueException("Item should be an instance of Item class.");
-        }
 
         // Bin has no fitted items yet
         if (iterator_count($bin->getIterableFittedItems()) === 0) {
@@ -347,7 +340,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return self
      */
-    public function withFirstFit(): self
+    public function withFirstFit()
     {
         // Sort the bins based on the sort method value
         $iterableBins = $this->getIterableBins();
@@ -362,7 +355,7 @@ final class Packager implements \JsonSerializable
         $iterableItems = $this->getIterableItems();
         $iterableItems->uasort(function ($a, $b) {
             if ($a->getVolume() === $b->getVolume()) return 0;
-            return ($a->getVolume() > $b->getVolume()) ? $this->sortMethod : SortType::DESCENDING * $this->sortMethod;;
+            return ($a->getVolume() > $b->getVolume()) ? $this->sortMethod : SortType::DESCENDING * $this->sortMethod;
         });
 
         $this->items = $iterableItems;
@@ -376,7 +369,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return void
      */
-    public function pack(): void
+    public function pack()
     {
         foreach ($this->bins as $bin) {
 
@@ -404,7 +397,7 @@ final class Packager implements \JsonSerializable
      * 
      * @return array The resulted object.
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize()
     {
         $vars = get_object_vars($this);
 

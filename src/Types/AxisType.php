@@ -5,9 +5,8 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D\Types;
 
@@ -17,14 +16,14 @@ namespace Latuconsinafr\BinPackager\BinPackager3D\Types;
 class AxisType
 {
     // Represents the 3d-plane axis
-    public const LENGTH = 'x-axis';
-    public const HEIGHT = 'y-axis';
-    public const BREADTH = 'z-axis';
+    const LENGTH = 'x-axis';
+    const HEIGHT = 'y-axis';
+    const BREADTH = 'z-axis';
 
     // Enum contains all the 3d-plane axis
-    public const ALL_AXIS = [
+    const ALL_AXIS = [
         AxisType::LENGTH,
         AxisType::HEIGHT,
-        AxisType::BREADTH
+        AxisType::BREADTH,
     ];
 }

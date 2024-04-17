@@ -5,9 +5,8 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D;
 
@@ -28,37 +27,37 @@ final class Item implements \JsonSerializable
     /**
      * @var float The item's length.
      */
-    private float $length;
+    private $length;
 
     /**
      * @var float The item's breadth.
      */
-    private float $breadth;
+    private $breadth;
 
     /**
      * @var float The item's height.
      */
-    private float $height;
+    private $height;
 
     /**
      * @var float The item's volume.
      */
-    private float $volume;
+    private $volume;
 
     /**
      * @var float The item's weight.
      */
-    private float $weight;
+    private $weight;
 
     /**
      * @var int The item's current rotation type.
      */
-    private int $rotationType;
+    private $rotationType;
 
     /**
      * @var array The item's current position.
      */
-    private array $position;
+    private $position;
 
     /**
      * @param mixed $id The identifier of the item.
@@ -67,7 +66,7 @@ final class Item implements \JsonSerializable
      * @param float $breadth The breadth of the item.
      * @param float $weight The weight of the item.
      */
-    public function __construct($id, float $length, float $height, float $breadth, float $weight)
+    public function __construct($id, $length, $height, $breadth, $weight)
     {
         $this->id = $id;
 
@@ -96,7 +95,7 @@ final class Item implements \JsonSerializable
      * 
      * @return float The item's length.
      */
-    public function getLength(): float
+    public function getLength()
     {
         return $this->length;
     }
@@ -106,7 +105,7 @@ final class Item implements \JsonSerializable
      * 
      * @return float The item's height.
      */
-    public function getHeight(): float
+    public function getHeight()
     {
         return $this->height;
     }
@@ -116,7 +115,7 @@ final class Item implements \JsonSerializable
      * 
      * @return float The item's breadth.
      */
-    public function getBreadth(): float
+    public function getBreadth()
     {
         return $this->breadth;
     }
@@ -126,7 +125,7 @@ final class Item implements \JsonSerializable
      * 
      * @return float The item's volume.
      */
-    public function getVolume(): float
+    public function getVolume()
     {
         return $this->volume;
     }
@@ -136,7 +135,7 @@ final class Item implements \JsonSerializable
      * 
      * @return float The item's weight.
      */
-    public function getWeight(): float
+    public function getWeight()
     {
         return $this->weight;
     }
@@ -146,7 +145,7 @@ final class Item implements \JsonSerializable
      * 
      * @return int The item's rotation type.
      */
-    public function getRotationType(): int
+    public function getRotationType()
     {
         return $this->rotationType;
     }
@@ -157,7 +156,7 @@ final class Item implements \JsonSerializable
      * 
      * @return array The item's position (for example = ['x-axis => 0, 'y-axis' => 0, 'z-axis' => 0]).
      */
-    public function getPosition(): array
+    public function getPosition()
     {
         return $this->position;
     }
@@ -168,7 +167,7 @@ final class Item implements \JsonSerializable
      * 
      * @return array The item's dimension (for example = ['x-axis => 0, 'y-axis' => 0, 'z-axis' => 0]).
      */
-    public function getDimension(): array
+    public function getDimension()
     {
         switch ($this->rotationType) {
             case RotationCombinationType::LHB_ROTATION:
@@ -178,16 +177,12 @@ final class Item implements \JsonSerializable
                     AxisType::BREADTH => $this->breadth
                 ];
 
-                break;
-
             case RotationCombinationType::LBH_ROTATION:
                 return [
                     AxisType::LENGTH => $this->length,
                     AxisType::HEIGHT => $this->breadth,
                     AxisType::BREADTH => $this->height
                 ];
-
-                break;
 
             case RotationCombinationType::HLB_ROTATION:
                 return [
@@ -196,16 +191,12 @@ final class Item implements \JsonSerializable
                     AxisType::BREADTH => $this->breadth
                 ];
 
-                break;
-
             case RotationCombinationType::HBL_ROTATION:
                 return [
                     AxisType::LENGTH => $this->height,
                     AxisType::HEIGHT => $this->breadth,
                     AxisType::BREADTH => $this->length
                 ];
-
-                break;
 
             case RotationCombinationType::BLH_ROTATION:
                 return [
@@ -214,16 +205,12 @@ final class Item implements \JsonSerializable
                     AxisType::BREADTH => $this->height
                 ];
 
-                break;
-
             case RotationCombinationType::BHL_ROTATION:
                 return [
                     AxisType::LENGTH => $this->breadth,
                     AxisType::HEIGHT => $this->height,
                     AxisType::BREADTH => $this->length
                 ];
-
-                break;
 
             default:
                 throw new \UnexpectedValueException("Invalid rotation combination type, the value should be in between 0 and 5.");
@@ -237,7 +224,7 @@ final class Item implements \JsonSerializable
      * 
      * @return void
      */
-    public function setPrecision($precision): void
+    public function setPrecision($precision)
     {
         $this->length = round($this->length, $precision);
         $this->height = round($this->height, $precision);
@@ -254,7 +241,7 @@ final class Item implements \JsonSerializable
      * 
      * @return void
      */
-    public function setRotationType(int $rotationType): void
+    public function setRotationType( $rotationType)
     {
         if (!is_int($rotationType) || $rotationType < 0 || $rotationType > 5) {
             throw new \UnexpectedValueException("Invalid rotation combination type value, the value should be in between 0 and 5.");
@@ -271,9 +258,9 @@ final class Item implements \JsonSerializable
      * 
      * @return void
      */
-    public function setPosition(array $position): void
+    public function setPosition(array $position)
     {
-        if (!is_array($position) || count($position) != 3) {
+        if (count($position) != 3) {
             throw new \UnexpectedValueException("Invalid position value, the value should be an array consisting of 3 values representing the x-axis, y-axis and z-axis.");
         }
 
@@ -285,7 +272,7 @@ final class Item implements \JsonSerializable
      * 
      * @return array The resulted object.
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize()
     {
         $vars = get_object_vars($this);
 

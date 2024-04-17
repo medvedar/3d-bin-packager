@@ -5,9 +5,8 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D\Handlers;
 
@@ -21,18 +20,18 @@ final class IntersectionHandler
 {
     /**
      * The two rectangles intersection checker.
-     * 
+     *
      * @param Item $firstItem The first item, in this case a rectangle.
      * @param Item $secondItem The second item, in this case a rectangle as well.
      * @param int $xAxis The x axis.
      * @param int $yAxis The y axis.
-     * 
-     * @return bool The flag indicates whether both items are intersected with each other or not, 
+     *
+     * @return bool The flag indicates whether both items are intersected with each other or not,
      * return true if both items are intersected with each other, otherwise false.
      */
-    private static function isRectangleIntersected(Item $firstItem, Item $secondItem, string $xAxis, string $yAxis): bool
+    private static function isRectangleIntersected(Item $firstItem, Item $secondItem, $xAxis, $yAxis)
     {
-        $firstDimension = $firstItem->getDimension();
+        $firstDimension  = $firstItem->getDimension();
         $secondDimension = $secondItem->getDimension();
 
         $firstCx = $firstItem->getPosition()[$xAxis] + $firstDimension[$xAxis] / 2;
@@ -49,14 +48,14 @@ final class IntersectionHandler
 
     /**
      * The two 3d-plane intersection checker.
-     * 
+     *
      * @param Item $firstItem The first 3d-plane item.
      * @param Item $secondItem The second 3d-plane item.
-     * 
-     * @return bool The flag indicates whether both items are intersected with each other or not, 
+     *
+     * @return bool The flag indicates whether both items are intersected with each other or not,
      * return true if both items are intersected with each other, otherwise false.
      */
-    public static function isIntersected(Item $firstItem, Item $secondItem): bool
+    public static function isIntersected(Item $firstItem, Item $secondItem)
     {
         return (self::isRectangleIntersected($firstItem, $secondItem, AxisType::LENGTH, AxisType::BREADTH) &&
             self::isRectangleIntersected($firstItem, $secondItem, AxisType::BREADTH, AxisType::HEIGHT) &&

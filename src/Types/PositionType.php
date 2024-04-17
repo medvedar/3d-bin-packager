@@ -5,9 +5,8 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D\Types;
 
@@ -17,9 +16,9 @@ namespace Latuconsinafr\BinPackager\BinPackager3D\Types;
 class PositionType
 {
     // Start position
-    public const START_POSITION = [
-        AxisType::LENGTH    => 0,
-        AxisType::HEIGHT    => 0,
-        AxisType::BREADTH   => 0
+    const START_POSITION = [
+        AxisType::LENGTH  => 0,
+        AxisType::HEIGHT  => 0,
+        AxisType::BREADTH => 0,
     ];
 }

@@ -5,9 +5,10 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
+ *
  */
 
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D\Types;
 
@@ -17,6 +18,6 @@ namespace Latuconsinafr\BinPackager\BinPackager3D\Types;
 class SortType
 {
     // Represents the sort type, whether it is ascending or descending.
-    public const ASCENDING = 1;
-    public const DESCENDING = -1;
+    const ASCENDING = 1;
+    const DESCENDING = -1;
 }
