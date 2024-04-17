@@ -5,9 +5,9 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
+ *
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D\Tests\TestCases\Handlers;
 
@@ -26,38 +26,38 @@ class IntersectionHandlerTest extends TestCase
     /**
      * @var IntersectionHandler The intersection handler class.
      */
-    private IntersectionHandler $intersectionHandler;
+    private $intersectionHandler;
 
     /**
      * @var ItemFixture The item fixture.
      */
-    private ItemFixture $itemFixture;
+    private $itemFixture;
 
     /**
      * The set up test environment method.
-     * 
+     *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->intersectionHandler = new IntersectionHandler();
-        $this->itemFixture = new ItemFixture();
+        $this->itemFixture         = new ItemFixture();
     }
 
     /**
      * isIntersected() method tested with two items which
      * has the same position.
-     * 
+     *
      * @return void
      */
-    public function testIsIntersected_Equal_Position(): void
+    public function testIsIntersected_Equal_Position()
     {
         $item1 = new Item(
             $this->itemFixture->item1Id,
             $this->itemFixture->item1Length,
             $this->itemFixture->item1Height,
             $this->itemFixture->item1Breadth,
-            $this->itemFixture->item1Weight,
+            $this->itemFixture->item1Weight
         );
         $item1->setPosition(PositionType::START_POSITION);
 
@@ -66,7 +66,7 @@ class IntersectionHandlerTest extends TestCase
             $this->itemFixture->item2Length,
             $this->itemFixture->item2Height,
             $this->itemFixture->item2Breadth,
-            $this->itemFixture->item2Weight,
+            $this->itemFixture->item2Weight
         );
         $item2->setPosition((PositionType::START_POSITION));
 
@@ -79,17 +79,17 @@ class IntersectionHandlerTest extends TestCase
      * isIntersected() method tested with two items which
      * has the different position but still intersected with each other.
      * In this case the item 2 position is still inside the item 1 area.
-     * 
+     *
      * @return void
      */
-    public function testIsIntersected_Different_Position_But_Still_Intersected(): void
+    public function testIsIntersected_Different_Position_But_Still_Intersected()
     {
         $item1 = new Item(
             $this->itemFixture->item1Id,
             $this->itemFixture->item1Length,
             $this->itemFixture->item1Height,
             $this->itemFixture->item1Breadth,
-            $this->itemFixture->item1Weight,
+            $this->itemFixture->item1Weight
         );
         $item1->setPosition(PositionType::START_POSITION);
 
@@ -98,12 +98,12 @@ class IntersectionHandlerTest extends TestCase
             $this->itemFixture->item2Length,
             $this->itemFixture->item2Height,
             $this->itemFixture->item2Breadth,
-            $this->itemFixture->item2Weight,
+            $this->itemFixture->item2Weight
         );
         $item2->setPosition([
-            AxisType::LENGTH => $item1->getLength() - 0.01,
-            AxisType::HEIGHT => $item1->getHeight() - 0.01,
-            AxisType::BREADTH => $item1->getBreadth() - 0.01
+            AxisType::LENGTH  => $item1->getLength() - 0.01,
+            AxisType::HEIGHT  => $item1->getHeight() - 0.01,
+            AxisType::BREADTH => $item1->getBreadth() - 0.01,
         ]);
 
         $result = $this->intersectionHandler->isIntersected($item1, $item2);
@@ -115,17 +115,17 @@ class IntersectionHandlerTest extends TestCase
      * isIntersected() method tested with two items which
      * has the different position ant not intersected with each other.
      * In this case the item 2 position is right next to the item 1.
-     * 
+     *
      * @return void
      */
-    public function testIsIntersected_Different_Position_And_Not_Intersected(): void
+    public function testIsIntersected_Different_Position_And_Not_Intersected()
     {
         $item1 = new Item(
             $this->itemFixture->item1Id,
             $this->itemFixture->item1Length,
             $this->itemFixture->item1Height,
             $this->itemFixture->item1Breadth,
-            $this->itemFixture->item1Weight,
+            $this->itemFixture->item1Weight
         );
         $item1->setPosition(PositionType::START_POSITION);
 
@@ -134,12 +134,12 @@ class IntersectionHandlerTest extends TestCase
             $this->itemFixture->item2Length,
             $this->itemFixture->item2Height,
             $this->itemFixture->item2Breadth,
-            $this->itemFixture->item2Weight,
+            $this->itemFixture->item2Weight
         );
         $item2->setPosition([
-            AxisType::LENGTH => $item1->getLength(),
-            AxisType::HEIGHT => $item1->getHeight(),
-            AxisType::BREADTH => $item1->getBreadth()
+            AxisType::LENGTH  => $item1->getLength(),
+            AxisType::HEIGHT  => $item1->getHeight(),
+            AxisType::BREADTH => $item1->getBreadth(),
         ]);
 
         $result = $this->intersectionHandler->isIntersected($item1, $item2);
@@ -149,10 +149,10 @@ class IntersectionHandlerTest extends TestCase
 
     /**
      * The tear down test environment method.
-     * 
+     *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
     }
 }

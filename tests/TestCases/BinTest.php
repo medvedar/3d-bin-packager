@@ -5,9 +5,8 @@
  *
  * @license   MIT
  * @author    Farista Latuconsina
+ * @author    Maksym Medar
  */
-
-declare(strict_types=1);
 
 namespace Latuconsinafr\BinPackager\BinPackager3D\Tests\TestCases;
 
@@ -26,42 +25,42 @@ class BinTest extends TestCase
     /**
      * @var Bin The bin class.
      */
-    private Bin $bin;
+    private $bin;
 
     /**
      * @var BinFixture The bin fixture.
      */
-    private BinFixture $binFixture;
+    private $binFixture;
 
     /**
      * @var ItemFixture The item fixture.
      */
-    private ItemFixture $itemFixture;
+    private $itemFixture;
 
     /**
      * The set up test environment method.
-     * 
+     *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
-        $this->binFixture = new BinFixture();
+        $this->binFixture  = new BinFixture();
         $this->itemFixture = new ItemFixture();
-        $this->bin = new Bin(
+        $this->bin         = new Bin(
             $this->binFixture->bin1Id,
             $this->binFixture->bin1Length,
             $this->binFixture->bin1Height,
             $this->binFixture->bin1Breadth,
-            $this->binFixture->bin1Weight,
+            $this->binFixture->bin1Weight
         );
     }
 
     /**
      * getVolume() method tested with item 1 length, height and breadth.
-     * 
+     *
      * @return void
      */
-    public function testGetVolume(): void
+    public function testGetVolume()
     {
         $volume = $this->binFixture->bin1Length * $this->binFixture->bin1Height * $this->binFixture->bin1Breadth;
         $this->assertEquals($volume, $this->bin->getVolume());
@@ -69,17 +68,17 @@ class BinTest extends TestCase
 
     /**
      * setPrecision() method tested with precision value is set to 2.
-     * 
+     *
      * @return void
      */
-    public function testSetPrecision(): void
+    public function testSetPrecision()
     {
         $precisionToBe = 2;
 
         $this->bin->setPrecision($precisionToBe);
 
         $bin1LengthString = (string)$this->bin->getLength();
-        $precision = (int) strpos(strrev($bin1LengthString), ".");
+        $precision        = (int)strpos(strrev($bin1LengthString), ".");
 
         // The number of digits after the decimal point should be 2
         $this->assertEquals($precisionToBe, $precision);
@@ -87,17 +86,17 @@ class BinTest extends TestCase
 
     /**
      * setFittedItems() method tested with two items.
-     * 
+     *
      * @return void
      */
-    public function testSetFittedItems(): void
+    public function testSetFittedItems()
     {
         $item1 = new Item(
             $this->itemFixture->item1Id,
             $this->itemFixture->item1Length,
             $this->itemFixture->item1Height,
             $this->itemFixture->item1Breadth,
-            $this->itemFixture->item1Weight,
+            $this->itemFixture->item1Weight
         );
 
         $item2 = new Item(
@@ -105,7 +104,7 @@ class BinTest extends TestCase
             $this->itemFixture->item2Length,
             $this->itemFixture->item2Height,
             $this->itemFixture->item2Breadth,
-            $this->itemFixture->item2Weight,
+            $this->itemFixture->item2Weight
         );
 
         $this->bin->setFittedItems($item1);
@@ -121,17 +120,17 @@ class BinTest extends TestCase
 
     /**
      * setUnfittedItems() method tested with two items.
-     * 
+     *
      * @return void
      */
-    public function testSetUnfittedItems(): void
+    public function testSetUnfittedItems()
     {
         $item1 = new Item(
             $this->itemFixture->item1Id,
             $this->itemFixture->item1Length,
             $this->itemFixture->item1Height,
             $this->itemFixture->item1Breadth,
-            $this->itemFixture->item1Weight,
+            $this->itemFixture->item1Weight
         );
 
         $item2 = new Item(
@@ -139,7 +138,7 @@ class BinTest extends TestCase
             $this->itemFixture->item2Length,
             $this->itemFixture->item2Height,
             $this->itemFixture->item2Breadth,
-            $this->itemFixture->item2Weight,
+            $this->itemFixture->item2Weight
         );
 
         $this->bin->setUnfittedItems($item1);
@@ -158,17 +157,17 @@ class BinTest extends TestCase
      * has the fitted length, height, breadth and weight compare to
      * the bin's length, height, breadth and weight and any other fitted item(s) inside the bin.
      * In this case, the bin has no fitted item(s) yet.
-     * 
+     *
      * @return void
      */
-    public function testPutItem_Fitted(): void
+    public function testPutItem_Fitted()
     {
         $item = new Item(
             $this->itemFixture->item1Id,
             $this->itemFixture->item1Length,
             $this->itemFixture->item1Height,
             $this->itemFixture->item1Breadth,
-            $this->itemFixture->item1Weight,
+            $this->itemFixture->item1Weight
         );
 
         $result = $this->bin->putItem($item, PositionType::START_POSITION);
@@ -182,17 +181,17 @@ class BinTest extends TestCase
      * putItem() method tested with one item which
      * has the unfitted length, height, breadth and weight compare to
      * the bin's length, height, breadth and weight.
-     * 
+     *
      * @return void
      */
-    public function testPutItem_Unfitted_Overload(): void
+    public function testPutItem_Unfitted_Overload()
     {
         $item = new Item(
             $this->itemFixture->item10Id,
             $this->itemFixture->item10Length,
             $this->itemFixture->item10Height,
             $this->itemFixture->item10Breadth,
-            $this->itemFixture->item10Weight,
+            $this->itemFixture->item10Weight
         );
 
         $result = $this->bin->putItem($item, PositionType::START_POSITION);
@@ -205,24 +204,24 @@ class BinTest extends TestCase
      * has the fitted length, height, breadth and weight compare to
      * the bin's length, height, breadth and weight and any other fitted item(s) inside the bin.
      * But in this case, both items has same pivot position.
-     * 
+     *
      * @return void
      */
-    public function testPutItem_Unfitted_With_Items_Intersected(): void
+    public function testPutItem_Unfitted_With_Items_Intersected()
     {
         $item1 = new Item(
             $this->itemFixture->item1Id,
             $this->itemFixture->item1Length,
             $this->itemFixture->item1Height,
             $this->itemFixture->item1Breadth,
-            $this->itemFixture->item1Weight,
+            $this->itemFixture->item1Weight
         );
         $item2 = new Item(
             $this->itemFixture->item2Id,
             $this->itemFixture->item2Length,
             $this->itemFixture->item2Height,
             $this->itemFixture->item2Breadth,
-            $this->itemFixture->item2Weight,
+            $this->itemFixture->item2Weight
         );
 
         $result = $this->bin->putItem($item1, PositionType::START_POSITION);
@@ -233,10 +232,10 @@ class BinTest extends TestCase
 
     /**
      * The tear down test environment method.
-     * 
+     *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
     }
 }
